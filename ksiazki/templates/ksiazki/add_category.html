@@ -1,0 +1,14 @@
+{% extends 'ksiazki/index.html' %}
+{% block zawartosc %}
+<form method="POST">
+    Add category name:
+    <input type="text" name="name">
+    <br>
+    <input type="submit" value="Submit">
+    {% csrf_token %}
+</form>
+    {{ context }}
+{% endblock %}
+
+
+

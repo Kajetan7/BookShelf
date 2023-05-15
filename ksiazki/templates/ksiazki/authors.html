@@ -1,0 +1,8 @@
+{% extends 'ksiazki/index.html' %}
+{% block zawartosc %}
+    <ul>
+    {% for author in context %}
+        <li><a href="{% url 'edit_author' author.id %}"> {{ author.id }} {{ author.first_name }} {{ author.last_name }} </a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

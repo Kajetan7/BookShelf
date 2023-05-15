@@ -1,0 +1,10 @@
+{% extends 'ksiazki/index.html' %}
+{% block zawartosc %}
+<form method="POST">
+    Edit category {{ category.name }} name:
+    <input type="text" name="name">
+    <br>
+    <input type="submit" value="Submit">
+    {% csrf_token %}
+</form>
+{% endblock %}

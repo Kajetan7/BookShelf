@@ -1,0 +1,8 @@
+{% extends 'ksiazki/index.html' %}
+{% block zawartosc %}
+<form method="POST">
+{{ form.as_p }}
+    <input type="submit">
+    {% csrf_token %}
+</form>
+{% endblock %}

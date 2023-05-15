@@ -1,0 +1,8 @@
+{% extends 'ksiazki/index.html' %}
+{% block zawartosc %}
+    <ul>
+    {% for publisher in context %}
+        <li><a href="{% url 'edit_publisher' publisher.id %}"> {{ publisher.id }} {{ publisher.name }} </a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

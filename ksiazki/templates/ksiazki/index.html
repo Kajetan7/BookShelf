@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pasek z przyciskami</title>
+  <style>
+    .button-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      background-color: #F1F1F1
+;
+    }    .button-bar button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50
+;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="button-bar">
+      <button><a href="{% url 'Index' %}">INDEX</a></button>
+      <button><a href="{% url 'publishers' %}">PUBLISHERS</a></button>
+      <button><a href="{% url 'add_publisher' %}">ADD PUBLISHER</a></button>
+      <button><a href="{% url 'categories' %}">CATEGORIES</a></button>
+      <button><a href="{% url 'add_category' %}">ADD CATEGORY</a></button>
+      <button><a href="{% url 'add_author' %}">ADD AUTHOR</a></button>
+      <button><a href="{% url 'authors' %}">AUTHORS</a></button>
+  </div>
+<div>
+    {% block zawartosc %}
+    {{ context }}
+    {% endblock %}
+</div>
+Publishers: {{ pc }}
+</body>
+</html>
+
+

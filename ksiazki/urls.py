@@ -26,8 +26,12 @@ urlpatterns = [
     path('edit_publisher/<int:id>/', ksiazki_views.EditPublisher.as_view(), name='edit_publisher'),
     path('categories/', ksiazki_views.Categories.as_view(), name='categories'),
     path('authors/', ksiazki_views.Authors.as_view(), name='authors'),
+    path('books/', ksiazki_views.Books.as_view(), name='books'),
+    path('books/<int:id>/', ksiazki_views.BookDetails.as_view(), name='book_details'),
+    path('edit_comment/<int:id>/', ksiazki_views.EditCommentView.as_view(), name='edit_comment'),
     path('add_category/', ksiazki_views.AddCategory.as_view(), name='add_category'),
     path('add_author/', ksiazki_views.AddAuthorView.as_view(), name='add_author'),
+    path('add_book/', ksiazki_views.AddBookView.as_view(), name='add_book'),
     path('edit_category/<int:id>/', ksiazki_views.EditCategory.as_view(), name='edit_category'),
     path('edit_author/<int:id>/', ksiazki_views.EditAuthor.as_view(), name='edit_author'),
 ]

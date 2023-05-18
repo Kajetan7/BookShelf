@@ -1,0 +1,21 @@
+{% extends 'ksiazki/index.html' %}
+{% block zawartosc %}
+    <ul>
+        <li>{{ book.title }} || {{ book.author }} || {{ book.publisher.name }} || {% for category in book.categories.all %} {{ category.name }} {% endfor %} || {{ book.year }}</li>
+        <li>
+            komentarze:
+            <ul>
+                {% for comment in book.comment_set.all %}
+                    <li>{{ comment.date }}
+                    <p>{{ comment.content }}</p>
+                    {{ comment.user.username }}</li>
+
+                    <a href="{% url 'edit_comment' comment.id %}"> <button>Edit</button></a>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+{% if user.is_authenticated %}
+{% include 'book_generic/basic_form.html' %}
+{% endif %}
+{% endblock %}

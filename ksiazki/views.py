@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from ksiazki.models import Publisher, Category, Author
-from ksiazki.forms import AddAuthorForm
+from ksiazki.models import Publisher, Category, Author, Book, Comment
+from ksiazki.forms import AddAuthorForm, AddBookForm, AddCommentForm
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 
 
 class IndexView(View):
@@ -134,3 +135,64 @@ class EditAuthor(View):
 
             return redirect('authors')
         return render(request, 'ksiazki/edit_author.html', {'form': form})
+
+
+class AddBookView(View):
+
+    def get(self, request):
+        form = AddBookForm()
+        return render(request, 'ksiazki/add_book.html', {'form': form})
+
+    def post(self, request):
+        form = AddBookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+        return render(request, 'ksiazki/add_book.html', {'form': form})
+
+
+class Books(PermissionRequiredMixin, View):
+    permission_required = ['ksiazki.view_book']
+
+    def get(self, request):
+        books = Book.objects.all()
+        context = {
+            'context': books
+        }
+        return render(request, 'ksiazki/books.html', context)
+
+
+class BookDetails(LoginRequiredMixin, View):
+    def get(self, request, id):
+        book = Book.objects.get(id=id)
+        form = AddCommentForm()
+        context = {
+            'book': book,
+            'form': form
+        }
+        return render(request, 'ksiazki/book_details.html', context)
+
+    def post(self, request, id):
+        if not request.user.is_authenticated:
+            return redirect('index')
+        book = Book.objects.get(id=id)
+        form = AddCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.book = book
+            comment.user = request.user
+            comment.save()
+            return redirect('book_details', id)
+        return render(request, 'ksiazki/book_details.html', {'book': book, 'form': form})
+
+
+class EditCommentView(UserPassesTestMixin, View):
+
+    def test_func(self):
+        comment = Comment.objects.get(id=self.kwargs['pk'])
+        return comment.user == self.request.user
+
+    def get(self, request, id):
+        comment = Comment.objects.get(id=id)
+        form = AddCommentForm(instance=comment)
+        return render(request, 'book_generic/form.html', {'form': form})

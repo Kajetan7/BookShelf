@@ -1,0 +1,8 @@
+{% extends 'ksiazki/index.html' %}
+{% block zawartosc %}
+    <ul>
+    {% for book in context %}
+        <li><a href="{% url 'book_details' book.id %}"> {{ book.title }} </a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

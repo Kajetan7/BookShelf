@@ -1,0 +1,8 @@
+{% extends 'ksiazki/index.html' %}
+{% block zawartosc %}
+<ul>
+    {% for obj in object_list %}
+        <li><a href="{{ obj.get_absolute_url }}"> {{ obj }} </a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

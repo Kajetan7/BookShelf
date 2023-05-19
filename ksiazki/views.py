@@ -13,7 +13,9 @@ class IndexView(View):
         return render(request, 'ksiazki/index.html', context)
 
 
-class Publishers(View):
+class Publishers(PermissionRequiredMixin, View):
+    permission_required = ['ksiazki.view_permission']
+
     def get(self, request):
         publishers = Publisher.objects.all()
         context = {
@@ -147,7 +149,7 @@ class AddBookView(View):
         form = AddBookForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect('add_book')
         return render(request, 'ksiazki/add_book.html', {'form': form})
 
 
